@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Conduit.Auth.Infrastructure.JwtTokens;
@@ -49,6 +49,7 @@ namespace Conduit.Shared.Tokens
                             builder => builder
                                 .RequireAuthenticatedUser()
                                 .RequireClaim(ClaimTypes.NameIdentifier)
+                                .RequireClaim(ClaimTypes.Name)
                                 .RequireClaim(JwtRegisteredClaimNames.Jti));
 
                         authorizationOptions.DefaultPolicy =
@@ -60,15 +61,16 @@ namespace Conduit.Shared.Tokens
 
         private static Task ReceiveToken(MessageReceivedContext context)
         {
-            var header = context.HttpContext.Request.Headers.Authorization[0];
+            var header = context.HttpContext.Request.Headers.Authorization.ToString();
             const string prefix = "Token ";
             if (header != null &&
                 header.StartsWith(prefix))
             {
-                header = header.Remove(0, prefix.Length);
+                context.Token = header
+                    .Remove(0, prefix.Length)
+                    .Trim();
             }
 
-            context.Token = header;
             return Task.CompletedTask;
         }
     }
