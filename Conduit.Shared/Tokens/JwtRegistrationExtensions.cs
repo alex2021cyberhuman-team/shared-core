@@ -1,7 +1,6 @@
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Conduit.Auth.Infrastructure.JwtTokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.JsonWebTokens;
@@ -16,11 +15,9 @@ namespace Conduit.Shared.Tokens
         {
             var options = new JwtTokenProviderOptions();
             optionsAction(options);
-            return services
-                .Configure(optionsAction)
+            return services.Configure(optionsAction)
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(
-                    JwtBearerDefaults.AuthenticationScheme,
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,
                     bearerOptions =>
                     {
                         bearerOptions.Events = new()
@@ -40,35 +37,31 @@ namespace Conduit.Shared.Tokens
                                 options.SecurityKeyAlgorithm
                             }
                         };
-                    })
-                .Services.AddAuthorization(
-                    authorizationOptions =>
-                    {
-                        authorizationOptions.AddPolicy(
-                            JwtBearerDefaults.AuthenticationScheme,
-                            builder => builder
-                                .RequireAuthenticatedUser()
-                                .RequireClaim(ClaimTypes.NameIdentifier)
-                                .RequireClaim(ClaimTypes.Name)
-                                .RequireClaim(JwtRegisteredClaimNames.Jti));
+                    }).Services.AddAuthorization(authorizationOptions =>
+                {
+                    authorizationOptions.AddPolicy(
+                        JwtBearerDefaults.AuthenticationScheme,
+                        builder => builder.RequireAuthenticatedUser()
+                            .RequireClaim(ClaimTypes.NameIdentifier)
+                            .RequireClaim(ClaimTypes.Name)
+                            .RequireClaim(JwtRegisteredClaimNames.Jti));
 
-                        authorizationOptions.DefaultPolicy =
-                            authorizationOptions.GetPolicy(
-                                JwtBearerDefaults.AuthenticationScheme) ??
-                            throw new InvalidOperationException();
-                    });
+                    authorizationOptions.DefaultPolicy =
+                        authorizationOptions.GetPolicy(JwtBearerDefaults
+                            .AuthenticationScheme) ??
+                        throw new InvalidOperationException();
+                });
         }
 
-        private static Task ReceiveToken(MessageReceivedContext context)
+        private static Task ReceiveToken(
+            MessageReceivedContext context)
         {
-            var header = context.HttpContext.Request.Headers.Authorization.ToString();
+            var header = context.HttpContext.Request.Headers.Authorization
+                .ToString();
             const string prefix = "Token ";
-            if (header != null &&
-                header.StartsWith(prefix))
+            if (header != null && header.StartsWith(prefix))
             {
-                context.Token = header
-                    .Remove(0, prefix.Length)
-                    .Trim();
+                context.Token = header.Remove(0, prefix.Length).Trim();
             }
 
             return Task.CompletedTask;

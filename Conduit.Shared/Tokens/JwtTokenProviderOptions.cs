@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Conduit.Auth.Infrastructure.JwtTokens
+namespace Conduit.Shared.Tokens
 {
     public class JwtTokenProviderOptions
     {
