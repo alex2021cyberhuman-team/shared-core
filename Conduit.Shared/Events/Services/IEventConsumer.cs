@@ -1,10 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿namespace Conduit.Shared.Events.Services;
 
-namespace Conduit.Shared.Events.Services
+public interface IEventConsumer<in T>
 {
-    public interface IEventConsumer<in T>
-    {
-        Task ConsumeAsync(
-            T message);
-    }
+    Task ConsumeAsync(
+        T message);
 }

@@ -1,10 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿namespace Conduit.Shared.Events.Services;
 
-namespace Conduit.Shared.Events.Services
+public interface IEventProducer<in T>
 {
-    public interface IEventProducer<in T>
-    {
-        Task ProduceEventAsync(
-            T message);
-    }
+    Task ProduceEventAsync(
+        T message);
 }
