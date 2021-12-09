@@ -9,23 +9,31 @@ public class RabbitMqSettings<T> : IRabbitMqSettings
     public RabbitMqSettings()
     {
         _lowerName = typeof(T).Name.ToLower();
+        Exchange = $"exchange-{_lowerName}";
+        Queue = $"queue-{_lowerName}";
+        RoutingKey = $"routing-{_lowerName}";
+        ExchangeType = "direct";
+        Durable = true;
+        Exclusive = false;
+        AutoDelete = false;
+        AutoAck = true;
     }
 
-    public string Exchange =>
-        $"exchange-{_lowerName}";
+    public string Exchange  { get; set; }
 
-    public string Queue => $"queue-{_lowerName}";
+    public string Queue { get; set; }
 
-    public string RoutingKey =>
-        $"routing-{_lowerName}";
+    public string RoutingKey  { get; set; }
 
-    public string ExchangeType => "direct";
+    public string ExchangeType  { get; set; }
 
-    public bool Durable => true;
+    public bool Durable { get; set; }
 
-    public bool Exclusive => false;
+    public bool Exclusive { get; set; }
 
-    public bool AutoDelete => false;
+    public bool AutoDelete { get; set; }
+
+    public bool AutoAck { get; set; }
 
     public void Initialize(
         IModel channel)

@@ -17,12 +17,6 @@ public class RabbitMqInitializer
 
     public Task StartAsync()
     {
-        Console.WriteLine(_connectionFactory.HostName);
-        Console.WriteLine(_connectionFactory.Port);
-        Console.WriteLine(_connectionFactory.UserName);
-        Console.WriteLine(_connectionFactory.Password);
-        Console.WriteLine(_connectionFactory.Endpoint.ToString());
-        Console.WriteLine(_connectionFactory.Ssl);
         using var connection = _connectionFactory.CreateConnection();
         using var channel = connection.CreateModel();
 

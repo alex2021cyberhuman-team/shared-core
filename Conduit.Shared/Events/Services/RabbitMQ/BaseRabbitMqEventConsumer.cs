@@ -41,6 +41,7 @@ public abstract class BaseRabbitMqEventConsumer<T> : IHostedService, IDisposable
         _settings.Initialize(_channel);
         _consumer = new(_channel);
         _consumer.Received += CallConsumptionAsync;
+        _channel.BasicConsume(_settings.Queue, _settings.AutoAck, _consumer);
         return Task.CompletedTask;
     }
 

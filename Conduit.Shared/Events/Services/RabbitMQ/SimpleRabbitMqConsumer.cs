@@ -3,8 +3,7 @@ using RabbitMQ.Client;
 
 namespace Conduit.Shared.Events.Services.RabbitMQ;
 
-public class SimpleRabbitMqConsumer<T, THandler> : BaseRabbitMqEventConsumer<T>
-    where THandler : IEventConsumer<T>
+public class SimpleRabbitMqConsumer<T> : BaseRabbitMqEventConsumer<T>
 {
     private readonly IServiceProvider _serviceProvider;
 
@@ -21,7 +20,7 @@ public class SimpleRabbitMqConsumer<T, THandler> : BaseRabbitMqEventConsumer<T>
         T message)
     {
         await using var scope = _serviceProvider.CreateAsyncScope();
-        var eventHandler = scope.ServiceProvider.GetRequiredService<THandler>();
+        var eventHandler = scope.ServiceProvider.GetRequiredService<IEventConsumer<T>>();
         await eventHandler.ConsumeAsync(message);
     }
 }

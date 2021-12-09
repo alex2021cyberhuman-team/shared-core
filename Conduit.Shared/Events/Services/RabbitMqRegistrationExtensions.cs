@@ -38,8 +38,8 @@ public static class RabbitMqRegistrationExtensions
         where TEventConsumer : class, IEventConsumer<T>
     {
         return services.AddTransient<IRabbitMqSettings, RabbitMqSettings<T>>()
-            .AddScoped<RabbitMqSettings<T>>()
+            .AddTransient<RabbitMqSettings<T>>()
             .AddScoped<IEventConsumer<T>, TEventConsumer>()
-            .AddHostedService<SimpleRabbitMqConsumer<T, TEventConsumer>>();
+            .AddHostedService<SimpleRabbitMqConsumer<T>>();
     }
 }
