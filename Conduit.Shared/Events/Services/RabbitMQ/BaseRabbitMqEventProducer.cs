@@ -2,10 +2,11 @@
 
 namespace Conduit.Shared.Events.Services.RabbitMQ;
 
-public abstract class BaseRabbitMqEventProducer<T> : IEventProducer<T>
+public abstract class BaseRabbitMqEventProducer<T> : IEventProducer<T>, IDisposable
 {
     private readonly ConnectionFactory _connectionFactory;
     private readonly RabbitMqSettings<T> _settings;
+    private IModel? _channel;
     private IConnection? _connection;
 
     protected BaseRabbitMqEventProducer(
@@ -16,14 +17,17 @@ public abstract class BaseRabbitMqEventProducer<T> : IEventProducer<T>
         _settings = settings;
     }
 
+    protected IConnection Connection =>
+        _connection ??= _connectionFactory.CreateConnection();
+
+    protected IModel Channel => _channel ??= Connection.CreateModel();
+
     public Task ProduceEventAsync(
         T message)
     {
-        _connection ??= _connectionFactory.CreateConnection();
-        using var channel = _connection.CreateModel();
         var memory = Bytorize(message);
-        channel.BasicPublish(_settings.Exchange, _settings.RoutingKey, null,
-            memory);
+        Channel.BasicPublish(_settings.Exchange, _settings.RoutingKey,
+            body: memory);
         return Task.CompletedTask;
     }
 
@@ -31,5 +35,13 @@ public abstract class BaseRabbitMqEventProducer<T> : IEventProducer<T>
         T message)
     {
         return message.BytorizeAsJson();
+    }
+
+    public void Dispose()
+    {
+        _channel?.Close();
+        _connection?.Close();
+        _channel?.Dispose();
+        _connection?.Dispose();
     }
 }
