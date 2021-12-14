@@ -42,8 +42,8 @@ public static class JwtRegistrationExtensions
                     builder => builder.RequireAuthenticatedUser()
                         .RequireClaim(ClaimTypes.NameIdentifier)
                         .RequireClaim(ClaimTypes.Name)
-                        .RequireClaim(JwtRegisteredClaimNames.Jti));
-
+                        .RequireClaim(JwtRegisteredClaimNames.Jti)
+                        .RequireClaim(JwtRegisteredClaimNames.Typ, "access"));
                 authorizationOptions.DefaultPolicy =
                     authorizationOptions.GetPolicy(JwtBearerDefaults
                         .AuthenticationScheme) ??
