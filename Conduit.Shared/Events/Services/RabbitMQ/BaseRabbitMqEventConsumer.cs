@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
 
 namespace Conduit.Shared.Events.Services.RabbitMQ;
 
@@ -45,7 +44,6 @@ public abstract class BaseRabbitMqEventConsumer<T> : IHostedService, IDisposable
         CancellationToken cancellationToken)
     {
         _settings.Initialize(Channel);
-        Console.WriteLine($"Start Consumption {typeof(T).Name}");
         Channel.BasicConsume(Consumer, _settings.Queue);
         return Task.CompletedTask;
     }
@@ -54,7 +52,6 @@ public abstract class BaseRabbitMqEventConsumer<T> : IHostedService, IDisposable
         CancellationToken cancellationToken)
     {
         Unbind();
-        Console.WriteLine($"Stop Consumption {typeof(T).Name}");
         return Task.CompletedTask;
     }
 
@@ -97,8 +94,6 @@ public abstract class BaseRabbitMqEventConsumer<T> : IHostedService, IDisposable
             await using var scope = _scopeFactory.CreateAsyncScope();
             var eventConsumer = scope.ServiceProvider
                 .GetRequiredService<IEventConsumer<T>>();
-            Console.WriteLine(
-                $"HandleBasicDeliver {typeof(T).Name} {consumerTag}, {deliveryTag}, {redelivered}, {exchange}, {routingKey}");
             try
             {
                 await eventConsumer.ConsumeAsync(message);

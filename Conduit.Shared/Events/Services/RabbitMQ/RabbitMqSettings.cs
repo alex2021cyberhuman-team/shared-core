@@ -8,7 +8,7 @@ public class RabbitMqSettings<T> : IRabbitMqSettings
     {
         var lowerName = typeof(T).Name.ToLower();
         Exchange = $"exchange-{lowerName}";
-        Queue = $"queue-{lowerName}";
+        Queue = string.Empty;
         RoutingKey = $"routing-{lowerName}";
         ExchangeType = "direct";
         Durable = true;
@@ -35,7 +35,12 @@ public class RabbitMqSettings<T> : IRabbitMqSettings
     {
         channel.ExchangeDeclare(Exchange, ExchangeType, Durable, AutoDelete,
             null);
-        _ = channel.QueueDeclare(Queue, Durable, Exclusive, AutoDelete, null);
-        channel.QueueBind(Queue, Exchange, RoutingKey, null);
+
+        if (string.IsNullOrWhiteSpace(Queue) == false)
+        {
+            _ = channel.QueueDeclare(Queue, Durable, Exclusive, AutoDelete,
+                null);
+            channel.QueueBind(Queue, Exchange, RoutingKey, null);
+        }
     }
 }

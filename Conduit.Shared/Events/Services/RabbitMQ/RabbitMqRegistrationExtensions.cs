@@ -17,7 +17,7 @@ public static class RabbitMqRegistrationExtensions
         this IServiceCollection services,
         Action<ConnectionFactory> configureFactory)
     {
-        var connectionFactory = new ConnectionFactory()
+        var connectionFactory = new ConnectionFactory
         {
             DispatchConsumersAsync = true
         };
@@ -28,20 +28,32 @@ public static class RabbitMqRegistrationExtensions
     }
 
     public static IServiceCollection RegisterProducer<T>(
-        this IServiceCollection services)
+        this IServiceCollection services,
+        Action<RabbitMqSettings<T>>? configureAction = null)
     {
-        return services.AddSingleton<IRabbitMqSettings, RabbitMqSettings<T>>()
-            .AddSingleton<RabbitMqSettings<T>>()
+        var settings = GetSettings(configureAction);
+        return services.AddSingleton<IRabbitMqSettings>(settings)
+            .AddSingleton(settings)
             .AddSingleton<IEventProducer<T>, SimpleRabbitMqProducer<T>>();
     }
 
     public static IServiceCollection RegisterConsumer<T, TEventConsumer>(
-        this IServiceCollection services)
+        this IServiceCollection services,
+        Action<RabbitMqSettings<T>>? configureAction = null)
         where TEventConsumer : class, IEventConsumer<T>
     {
-        return services.AddSingleton<IRabbitMqSettings, RabbitMqSettings<T>>()
-            .AddSingleton<RabbitMqSettings<T>>()
+        var settings = GetSettings(configureAction);
+        return services.AddSingleton<IRabbitMqSettings>(settings)
+            .AddSingleton(settings)
             .AddScoped<IEventConsumer<T>, TEventConsumer>()
             .AddHostedService<SimpleRabbitMqConsumer<T>>();
+    }
+
+    private static RabbitMqSettings<T> GetSettings<T>(
+        Action<RabbitMqSettings<T>>? configureAction)
+    {
+        var settings = new RabbitMqSettings<T>();
+        configureAction?.Invoke(settings);
+        return settings;
     }
 }
