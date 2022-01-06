@@ -2,7 +2,9 @@
 
 namespace Conduit.Shared.Validation;
 
-[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter)]
+[AttributeUsage(AttributeTargets.Property |
+                AttributeTargets.Field |
+                AttributeTargets.Parameter)]
 public class NestedValidationAttribute : ValidationAttribute
 {
     protected override ValidationResult? IsValid(
@@ -19,7 +21,7 @@ public class NestedValidationAttribute : ValidationAttribute
             DisplayName = validationContext.DisplayName,
             MemberName = validationContext.MemberName
         };
-        
+
         var results = new List<ValidationResult>();
         _ = Validator.TryValidateObject(value, newContext, results);
         return results.FirstOrDefault();
