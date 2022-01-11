@@ -15,10 +15,6 @@ public class CreateArticleEventModel
     public DateTime CreatedAt { get; set; }
 
     public DateTime UpdatedAt { get; set; }
-
-    public string AuthorUsername { get; set; } = string.Empty;
-
-    public string? AuthorBiography { get; set; }
-
-    public string? AuthorImage { get; set; }
+    
+    public Guid AuthorId { get; set; }
 }
