@@ -42,7 +42,7 @@ public static class RabbitMqRegistrationExtensions
         Action<RabbitMqSettings<T>>? configureAction = null)
         where TEventConsumer : class, IEventConsumer<T>
     {
-        var settings = GetSettings(configureAction);
+        var settings = GetSettings(configureAction, queueName: typeof(T).Name + "-queue");
         return services.AddSingleton<IRabbitMqSettings>(settings)
             .AddSingleton(settings)
             .AddScoped<IEventConsumer<T>, TEventConsumer>()
@@ -50,10 +50,13 @@ public static class RabbitMqRegistrationExtensions
     }
 
     private static RabbitMqSettings<T> GetSettings<T>(
-        Action<RabbitMqSettings<T>>? configureAction)
+        Action<RabbitMqSettings<T>>? configureAction,
+        string? queueName = null)
     {
+        queueName ??= string.Empty;
         var settings = new RabbitMqSettings<T>();
         configureAction?.Invoke(settings);
+        settings.Queue = string.IsNullOrWhiteSpace(settings.Queue) ? queueName : settings.Queue;
         return settings;
     }
 }
