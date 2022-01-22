@@ -1,15 +1,16 @@
-﻿using RabbitMQ.Client;
+using System.Reflection;
+using RabbitMQ.Client;
 
 namespace Conduit.Shared.Events.Services.RabbitMQ;
 
 public class RabbitMqSettings<T> : IRabbitMqSettings
 {
+    private static readonly string LowerName = typeof(T).Name.ToLower();
+
     public RabbitMqSettings()
     {
-        var lowerName = typeof(T).Name.ToLower();
-        Exchange = $"exchange-{lowerName}";
-        Queue = string.Empty;
-        RoutingKey = $"routing-{lowerName}";
+        Exchange = $"exchange-{LowerName}";
+        RoutingKey = $"routing-{LowerName}";
         ExchangeType = "direct";
         Durable = true;
         Exclusive = false;
@@ -18,7 +19,11 @@ public class RabbitMqSettings<T> : IRabbitMqSettings
 
     public string Exchange { get; set; }
 
-    public string Queue { get; set; }
+    public string? Consumer { get; set; }
+
+    public bool AsConsumer { get; set; }
+    
+    public string? Queue { get; set; }
 
     public string RoutingKey { get; set; }
 
@@ -36,11 +41,37 @@ public class RabbitMqSettings<T> : IRabbitMqSettings
         channel.ExchangeDeclare(Exchange, ExchangeType, Durable, AutoDelete,
             null);
 
-        if (string.IsNullOrWhiteSpace(Queue) == false)
+        if (AsConsumer)
         {
-            _ = channel.QueueDeclare(Queue, Durable, Exclusive, AutoDelete,
-                null);
-            channel.QueueBind(Queue, Exchange, RoutingKey, null);
+            InitConsumer(channel);
+        }
+    }
+
+    private void InitConsumer(
+        IModel channel)
+    {
+        CoalesceConsumer();
+
+        CoalesceQueue();
+
+        _ = channel.QueueDeclare(Queue, Durable, Exclusive, AutoDelete, null);
+        channel.QueueBind(Queue, Exchange, RoutingKey, null);
+    }
+
+    private void CoalesceConsumer()
+    {
+        if (string.IsNullOrWhiteSpace(Consumer))
+        {
+            Consumer = Assembly.GetEntryAssembly()!.FullName!.Split('.').Skip(1)
+                .First().ToLower();
+        }
+    }
+
+    private void CoalesceQueue()
+    {
+        if (string.IsNullOrWhiteSpace(Queue))
+        {
+            Queue = $"queue-{LowerName}-{Consumer}";
         }
     }
 }
