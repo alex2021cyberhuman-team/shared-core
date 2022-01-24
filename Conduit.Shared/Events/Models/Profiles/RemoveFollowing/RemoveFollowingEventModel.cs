@@ -1,20 +1,14 @@
-﻿namespace Conduit.Shared.Events.Models.Profiles.RemoveFollowing;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+
+namespace Conduit.Shared.Events.Models.Profiles.RemoveFollowing;
 
 public record RemoveFollowingEventModel
 {
-    public RemoveFollowingEventModel()
-    {
-    }
 
-    public RemoveFollowingEventModel(
-        Guid followerId,
-        Guid followedId)
-    {
-        FollowerId = followerId;
-        FollowedId = followedId;
-    }
-
+    [JsonPropertyName("fr")]
     public Guid FollowerId { get; set; }
 
+    [JsonPropertyName("fd")]
     public Guid FollowedId { get; set; }
 }

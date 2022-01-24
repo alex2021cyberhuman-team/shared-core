@@ -1,20 +1,13 @@
-﻿namespace Conduit.Shared.Events.Models.Profiles.CreateFollowing;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+
+namespace Conduit.Shared.Events.Models.Profiles.CreateFollowing;
 
 public class CreateFollowingEventModel
 {
-    public CreateFollowingEventModel()
-    {
-    }
-
-    public CreateFollowingEventModel(
-        Guid followerId,
-        Guid followedId)
-    {
-        FollowerId = followerId;
-        FollowedId = followedId;
-    }
-
+    [JsonPropertyName("fr")]
     public Guid FollowerId { get; set; }
 
+    [JsonPropertyName("fd")]
     public Guid FollowedId { get; set; }
 }

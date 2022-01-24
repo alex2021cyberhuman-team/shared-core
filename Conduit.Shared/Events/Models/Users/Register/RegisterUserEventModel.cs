@@ -1,40 +1,29 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Conduit.Shared.Events.Models.Users.Register;
 
 public record RegisterUserEventModel
 {
-    public RegisterUserEventModel()
-    {
-    }
-
-    public RegisterUserEventModel(
-        Guid id,
-        string username,
-        string email,
-        string? image = default,
-        string? biography = default)
-    {
-        Id = id;
-        Username = username;
-        Email = email;
-        Image = image;
-        Biography = biography;
-    }
-
     [Key]
+    [JsonPropertyName("i")]
     public Guid Id { get; init; }
 
     [Required]
+    [JsonPropertyName("n")]
     public string Username { get; init; } = string.Empty;
 
     [Required]
     [EmailAddress]
+    [JsonPropertyName("e")]
     public string Email { get; init; } = string.Empty;
 
     [DataType(DataType.ImageUrl)]
+    [JsonPropertyName("im")]
     public string? Image { get; init; }
 
     [DataType(DataType.MultilineText)]
+    [JsonPropertyName("b")]
     public string? Biography { get; init; }
 }
