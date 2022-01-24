@@ -9,8 +9,8 @@ public static class IdentificationExtensions
         this HttpContext httpContext)
     {
         var typedValue = GetCurrentUserIdOptional(httpContext) ??
-                          throw new ApplicationException(
-                              "Empty identification claim");
+                         throw new ApplicationException(
+                             "Empty identification claim");
         return typedValue;
     }
 
