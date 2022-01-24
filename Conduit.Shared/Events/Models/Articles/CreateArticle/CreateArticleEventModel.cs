@@ -28,7 +28,7 @@ public class CreateArticleEventModel
 
     [JsonPropertyName("ua")]
     public DateTime UpdatedAt { get; set; }
-    
+
     [JsonPropertyName("ui")]
     public Guid AuthorId { get; set; }
 }
