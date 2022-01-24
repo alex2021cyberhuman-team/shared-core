@@ -22,7 +22,7 @@ public class RabbitMqSettings<T> : IRabbitMqSettings
     public string? Consumer { get; set; }
 
     public bool AsConsumer { get; set; }
-    
+
     public string? Queue { get; set; }
 
     public string RoutingKey { get; set; }
