@@ -9,5 +9,5 @@ public class DeleteArticleEventModel
     public Guid Id { get; set; }
 
     [JsonPropertyName("ui")]
-    public Guid UserId { get; set; } 
+    public Guid UserId { get; set; }
 }
