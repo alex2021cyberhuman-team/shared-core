@@ -1,7 +1,6 @@
-using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-namespace Conduit.Shared.Events.Models.Favorites;
+namespace Conduit.Shared.Events.Models.Likes.Favorite;
 
 public class FavoriteArticleEventModel
 {
