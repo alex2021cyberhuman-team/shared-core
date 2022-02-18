@@ -6,10 +6,10 @@ public class CreateCommentEventModel
 {
     [JsonPropertyName("b")]
     public string Body { get; set; } = string.Empty;
-    
+
     [JsonPropertyName("ca")]
     public DateTime CreatedAt { get; set; }
-    
+
     [JsonPropertyName("ua")]
     public DateTime UpdatedAt { get; set; }
 
