@@ -14,7 +14,7 @@ public class JwtTokenProviderOptions
 
     public string Audience { get; set; } = "Conduit.App";
 
-    public TimeSpan AccessTokenExpires { get; set; } = TimeSpan.FromHours(1);
+    public TimeSpan AccessTokenExpires { get; set; } = TimeSpan.FromDays(1);
 
     public SymmetricSecurityKey SymmetricSecurityKey =>
         new(Encoding.ASCII.GetBytes(SecurityKey));
