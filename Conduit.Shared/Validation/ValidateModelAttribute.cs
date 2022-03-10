@@ -13,19 +13,29 @@ public class ValidateModelAttribute : ActionFilterAttribute
 
     public static ValidateModelAttribute Instance { get; }
 
-    public override void OnActionExecuting(
-        ActionExecutingContext context)
+    public IActionResult Executing(
+        ActionContext context)
     {
-        if (context.ModelState.IsValid == false)
-        {
             var lowerCaseSerializableError =
-                new LowerCaseSerializableError(context.ModelState);
+                new ConduitCamelCaseSerializableError(context.ModelState);
             var actionResult =
                 new ObjectResult(new { errors = lowerCaseSerializableError })
                 {
                     StatusCode = (int)HttpStatusCode.UnprocessableEntity
                 };
-            actionResult.ExecuteResultAsync(context);
+            return actionResult;
+    }
+
+    public override async Task OnActionExecutionAsync(
+        ActionExecutingContext context,
+        ActionExecutionDelegate next)
+    {
+        if (context.ModelState.IsValid == false)
+        {
+            var result = Executing(context);
+            await result.ExecuteResultAsync(context);
         }
+
+        await next();
     }
 }

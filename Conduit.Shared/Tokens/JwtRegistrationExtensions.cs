@@ -33,7 +33,8 @@ public static class JwtRegistrationExtensions
                         ValidAlgorithms = new[]
                         {
                             options.SecurityKeyAlgorithm
-                        }
+                        },
+                        ClockSkew = TimeSpan.Zero
                     };
                 }).Services.AddAuthorization(authorizationOptions =>
             {
