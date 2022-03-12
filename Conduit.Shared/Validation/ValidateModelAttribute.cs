@@ -16,14 +16,14 @@ public class ValidateModelAttribute : ActionFilterAttribute
     public IActionResult Executing(
         ActionContext context)
     {
-            var lowerCaseSerializableError =
-                new ConduitCamelCaseSerializableError(context.ModelState);
-            var actionResult =
-                new ObjectResult(new { errors = lowerCaseSerializableError })
-                {
-                    StatusCode = (int)HttpStatusCode.UnprocessableEntity
-                };
-            return actionResult;
+        var lowerCaseSerializableError =
+            new ConduitCamelCaseSerializableError(context.ModelState);
+        var actionResult =
+            new ObjectResult(new { errors = lowerCaseSerializableError })
+            {
+                StatusCode = (int)HttpStatusCode.UnprocessableEntity
+            };
+        return actionResult;
     }
 
     public override async Task OnActionExecutionAsync(
