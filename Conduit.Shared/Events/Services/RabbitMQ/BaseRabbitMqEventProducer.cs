@@ -33,6 +33,7 @@ public abstract class BaseRabbitMqEventProducer<T> : IEventProducer<T>,
         _connection?.Close();
         _channel?.Dispose();
         _connection?.Dispose();
+        GC.SuppressFinalize(this);
     }
 
     public Task ProduceEventAsync(

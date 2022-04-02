@@ -23,7 +23,7 @@ public static class ErrorExtensions
             case Error.Forbidden:
                 logger.LogWarning("Forbidden error");
                 break;
-            default: throw new ArgumentOutOfRangeException(nameof(error))
+            default: throw new ArgumentOutOfRangeException(nameof(error));
         }
         
         return error switch

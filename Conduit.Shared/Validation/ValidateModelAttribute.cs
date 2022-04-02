@@ -13,7 +13,7 @@ public class ValidateModelAttribute : ActionFilterAttribute
 
     public static ValidateModelAttribute Instance { get; }
 
-    public IActionResult Executing(
+    public static IActionResult Executing(
         ActionContext context)
     {
         var lowerCaseSerializableError =

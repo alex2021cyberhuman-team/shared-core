@@ -48,6 +48,7 @@ public static class StartupHelper
             }
 
             await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
+            logger.LogInformation("Waiting HealthReport");
         }
     }
 }

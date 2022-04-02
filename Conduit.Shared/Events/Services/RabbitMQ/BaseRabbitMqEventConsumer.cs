@@ -37,7 +37,8 @@ public abstract class BaseRabbitMqEventConsumer<T> : IHostedService, IDisposable
 
     public void Dispose()
     {
-        Unbind();
+        Unbind();        
+        GC.SuppressFinalize(this);
     }
 
     public Task StartAsync(
