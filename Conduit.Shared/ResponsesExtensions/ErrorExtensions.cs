@@ -1,5 +1,5 @@
-using Microsoft.AspNetCore.Mvc;
 using Conduit.Shared.Validation;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace Conduit.Shared.ResponsesExtensions;
@@ -25,7 +25,7 @@ public static class ErrorExtensions
                 break;
             default: throw new ArgumentOutOfRangeException(nameof(error));
         }
-        
+
         return error switch
         {
             Error.None => output != null ? new OkObjectResult(output) : new NoContentResult(),
