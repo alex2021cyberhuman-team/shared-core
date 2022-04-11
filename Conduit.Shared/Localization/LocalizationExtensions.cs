@@ -27,4 +27,17 @@ public static class LocalizationExtensions
                 .GetRequiredService<IStringLocalizer<TResourceType>>());
         return mvcBuilder;
     }
+
+
+
+
+
+
+
+
+
+
 }
+
+
+
