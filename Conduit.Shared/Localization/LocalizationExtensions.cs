@@ -20,24 +20,11 @@ public static class LocalizationExtensions
                 options.DefaultRequestCulture = new(supportedCultures.First());
                 options.RequestCultureProviders.Clear();
                 options.RequestCultureProviders.Add(
-                    new QueryStringRequestCultureProvider());
+                new QueryStringRequestCultureProvider());
                 options.RequestCultureProviders.Add(
-                    new AcceptLanguageHeaderRequestCultureProvider());
+                new AcceptLanguageHeaderRequestCultureProvider());
             }).AddSingleton(serviceProvider => (IStringLocalizer)serviceProvider
-                .GetRequiredService<IStringLocalizer<TResourceType>>());
+            .GetRequiredService<IStringLocalizer<TResourceType>>());
         return mvcBuilder;
     }
-
-
-
-
-
-
-
-
-
-
 }
-
-
-
