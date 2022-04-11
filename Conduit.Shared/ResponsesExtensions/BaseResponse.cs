@@ -1,4 +1,4 @@
-﻿namespace Conduit.Shared.ResponsesExtensions;
+namespace Conduit.Shared.ResponsesExtensions;
 
 public abstract class BaseResponse
 {

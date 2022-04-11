@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 
 namespace Conduit.Shared.Events.Services.RabbitMQ;

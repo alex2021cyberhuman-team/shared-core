@@ -1,4 +1,4 @@
-﻿using FluentValidation.Results;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -43,6 +43,7 @@ public static class ValidationExtensions
                 errors =
                     new ConduitCamelCaseSerializableError(
                         validation.ToModelStateDictionary())
-            }) { StatusCode = 422 };
+            })
+            { StatusCode = 422 };
     }
 }

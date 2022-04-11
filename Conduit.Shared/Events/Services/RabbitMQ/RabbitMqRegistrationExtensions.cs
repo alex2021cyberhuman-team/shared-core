@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using RabbitMQ.Client;
 
 namespace Conduit.Shared.Events.Services.RabbitMQ;

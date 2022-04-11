@@ -1,4 +1,4 @@
-﻿using RabbitMQ.Client;
+using RabbitMQ.Client;
 
 namespace Conduit.Shared.Events.Services.RabbitMQ;
 

@@ -1,4 +1,4 @@
-﻿namespace Conduit.Shared.Startup;
+namespace Conduit.Shared.Startup;
 
 public class StartServerException : ApplicationException
 {

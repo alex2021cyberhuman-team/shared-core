@@ -1,4 +1,4 @@
-﻿namespace Conduit.Shared.Events.Services;
+namespace Conduit.Shared.Events.Services;
 
 public interface IEventProducer<in T>
 {
