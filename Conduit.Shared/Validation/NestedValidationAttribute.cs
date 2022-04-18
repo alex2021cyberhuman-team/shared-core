@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Conduit.Shared.Validation;
+namespace Conduit.Shared.Validations;
 
 [AttributeUsage(AttributeTargets.Property |
                 AttributeTargets.Field |

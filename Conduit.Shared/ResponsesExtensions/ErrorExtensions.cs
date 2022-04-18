@@ -1,4 +1,4 @@
-using Conduit.Shared.Validation;
+using Conduit.Shared.Validations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -9,7 +9,7 @@ public static class ErrorExtensions
     public static IActionResult GetAndLogActionResult(
         this Error error,
         object? output,
-        Validation.Validation? validation,
+        Validations.Validation? validation,
         ILogger logger)
     {
         switch (error)
@@ -39,7 +39,7 @@ public static class ErrorExtensions
     public static IActionResult GetActionResult(
         this Error error,
         object? output,
-        Validation.Validation? validation)
+        Validations.Validation? validation)
     {
         return error switch
         {

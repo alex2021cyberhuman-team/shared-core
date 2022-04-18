@@ -2,7 +2,7 @@ using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Conduit.Shared.Validation;
+namespace Conduit.Shared.Validations;
 
 public class ValidateModelAttribute : ActionFilterAttribute
 {
