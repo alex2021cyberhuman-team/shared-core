@@ -5,6 +5,10 @@ namespace Conduit.Shared.Validations;
 
 public class Validation : IEnumerable<ValidationResult>
 {
+    public Validation(string errorDescription) : this(new List<ValidationResult> { new(errorDescription) })
+    {
+    }
+
     public Validation(
         List<ValidationResult>? results = null)
     {
