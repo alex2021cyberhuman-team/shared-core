@@ -1,10 +1,14 @@
 using System.Collections;
 using System.ComponentModel.DataAnnotations;
 
-namespace Conduit.Shared.Validation;
+namespace Conduit.Shared.Validations;
 
 public class Validation : IEnumerable<ValidationResult>
 {
+    public Validation(string errorDescription) : this(new List<ValidationResult> { new(errorDescription) })
+    {
+    }
+
     public Validation(
         List<ValidationResult>? results = null)
     {

@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Conduit.Shared.Validation;
+namespace Conduit.Shared.Validations;
 
 public static class ValidationServicesExtensions
 {

@@ -2,7 +2,7 @@ using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace Conduit.Shared.Validation;
+namespace Conduit.Shared.Validations;
 
 public static class ValidationExtensions
 {
