@@ -1,5 +1,5 @@
 using System.Net;
-using Conduit.Shared.Validations;
+using Conduit.Shared.Validation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -10,7 +10,7 @@ public static class ErrorExtensions
     public static IActionResult GetAndLogActionResult(
         this Error error,
         object? output = null,
-        Validation? validation = null,
+        Validation.Validation? validation = null,
         ILogger? logger = null,
         string? errorDescription = null)
     {
@@ -30,7 +30,7 @@ public static class ErrorExtensions
         return error switch
         {
             Error.None => output != null ? new OkObjectResult(output) : errorDescription != null ? new OkObjectResult(errorDescription) : new NoContentResult(),
-            Error.BadRequest => validation != null ? validation.ToBadRequest() : (errorDescription != null ? new Validation(errorDescription) : null).ToBadRequest(),
+            Error.BadRequest => validation != null ? validation.ToBadRequest() : (errorDescription != null ? new Validation.Validation(errorDescription) : null).ToBadRequest(),
             Error.NotFound => errorDescription != null ? new NotFoundObjectResult(errorDescription) : new NotFoundResult(),
             Error.Forbidden => errorDescription != null ? new ObjectResult(errorDescription) { StatusCode = (int)HttpStatusCode.Forbidden } : new ForbidResult(),
             _ => throw new ArgumentOutOfRangeException(nameof(error))
@@ -40,7 +40,7 @@ public static class ErrorExtensions
     public static IActionResult GetActionResult(
         this Error error,
         object? output,
-        Validations.Validation? validation)
+        Validation.Validation? validation)
     {
         return error switch
         {

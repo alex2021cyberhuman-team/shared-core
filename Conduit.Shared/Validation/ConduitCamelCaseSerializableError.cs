@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace Conduit.Shared.Validations;
+namespace Conduit.Shared.Validation;
 
 [Serializable]
 public sealed class
