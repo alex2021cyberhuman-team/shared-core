@@ -1,7 +1,7 @@
 using System.Collections;
 using System.ComponentModel.DataAnnotations;
 
-namespace Conduit.Shared.Validations;
+namespace Conduit.Shared.Validation;
 
 public class Validation : IEnumerable<ValidationResult>
 {
